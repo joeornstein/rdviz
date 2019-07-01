@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 The `rdviz` package is currently available on GitHub. You can install it using the `devtools` package.
 
 ```{r installation, message=FALSE, warning=FALSE}
-# devtools::install_github('joeornstein/rdviz')
+devtools::install_github('joeornstein/rdviz')
 library(rdviz)
 ```
 
