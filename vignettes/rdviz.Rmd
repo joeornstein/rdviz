@@ -1,0 +1,37 @@
+---
+title: "rdviz"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{rdviz}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+`rdviz` is an `R` package that creates visualizations for regression discontinuity analyses. It builds on the automated bandwidth selection and local polynomial estimation techniques from the `rdrobust` package (Calonico, Cattaneo, Farrell and Titiunik 2015). 
+
+## Installation
+
+The `rdviz` package is currently available on GitHub. You can install it using the `devtools` package.
+
+```{r installation, message=FALSE, warning=FALSE}
+# devtools::install_github('joeornstein/rdviz')
+library(rdviz)
+```
+
+## Example
+
+The `X` and `Y` variables are randomly generated data included with the package. Here are two examples visualizations using these data, varying the polynomial order.
+
+```{r setup, message=FALSE, warning=FALSE}
+rdviz(x = X, y = Y, c = 0, p = 1)
+
+rdviz(x = X, y = Y, c = 0, p = 2)
+```
