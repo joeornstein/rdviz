@@ -51,20 +51,20 @@ rdviz <- function(x, y, c=0, p=1, kernel='tri',
   plot <- ggplot() +
 
     #Raw scatter
-    geom_point(data = dat, aes(x=X,y=Y), size = 1, color = 'gray') +
+    geom_point(data = dat, aes(x=X,y=Y), size = 1, alpha = 0.5) +
 
     #Add Local Polynomials
     stat_function(data = dat, aes(x=X,y=Y),
-                  fun=leftFormula, xlim=c(-h,c),
+                  fun=leftFormula, xlim=c(c-h,c),
                   size=1) +
     stat_function(data = dat, aes(x=X,y=Y),
-                  fun=rightFormula, xlim=c(c,h),
+                  fun=rightFormula, xlim=c(c,c+h),
                   size=1) +
 
     # Vertical Lines representing cutoff and bandwidths
     geom_vline(xintercept = 0, linetype = 'solid') +
-    geom_vline(xintercept = -h, linetype = 'dashed') +
-    geom_vline(xintercept = h, linetype = 'dashed') +
+    geom_vline(xintercept = c-h, linetype = 'dashed') +
+    geom_vline(xintercept = c+h, linetype = 'dashed') +
 
     #Theme
     theme_bw() +
