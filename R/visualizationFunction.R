@@ -22,8 +22,12 @@ rdviz <- function(x, y, c=0, p=1, kernel='tri',
 
   dat <- tibble(X=x,Y=y)
 
+  # Recenter x variables around cutoff
+  dat <- dat %>%
+    mutate(X = X - c)
+
   # Get bandwidth, slope, and intercept parameters from 'rdrobust'
-  rd <- rdrobust(y = dat$Y, x = dat$X, c=c, p=p, kernel=kernel)
+  rd <- rdrobust(y = dat$Y, x = dat$X, c=0, p=p, kernel=kernel)
 
   interceptLeft <- rd$beta_p_l[1,1]
   interceptRight <- rd$beta_p_r[1,1]
@@ -55,23 +59,28 @@ rdviz <- function(x, y, c=0, p=1, kernel='tri',
 
     #Add Local Polynomials
     stat_function(data = dat, aes(x=X,y=Y),
-                  fun=leftFormula, xlim=c(c-h,c),
+                  fun=leftFormula, xlim=c(-h,0),
                   size=1) +
     stat_function(data = dat, aes(x=X,y=Y),
-                  fun=rightFormula, xlim=c(c,c+h),
+                  fun=rightFormula, xlim=c(0,h),
                   size=1) +
 
     # Vertical Lines representing cutoff and bandwidths
     geom_vline(xintercept = 0, linetype = 'solid') +
-    geom_vline(xintercept = c-h, linetype = 'dashed') +
-    geom_vline(xintercept = c+h, linetype = 'dashed') +
+    geom_vline(xintercept = -h, linetype = 'dashed') +
+    geom_vline(xintercept = h, linetype = 'dashed') +
 
     #Theme
     theme_bw() +
 
     #Axis Labels
-    xlab(xlab) +
     ylab(ylab)
+
+  if(c != 0){
+    plot <- plot + xlab(paste0(xlab, ' (centered around cutoff)'))
+  }else{
+    plot <- plot + xlab(xlab)
+  }
 
   if(binnedPoints){
     return(plot + geom_point(data=binned_points, aes(x=x,y=y), size=2, color='black'))
