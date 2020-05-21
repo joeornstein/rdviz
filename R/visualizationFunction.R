@@ -51,7 +51,7 @@ rdviz <- function(x, y, c=0, p=1, kernel='tri',
   plot <- ggplot() +
 
     #Raw scatter
-    geom_point(data = dat, aes(x=X,y=Y), size = 1, alpha = 0.5) +
+    geom_point(data = dat, aes(x=X,y=Y), size = 1, alpha = 0.1) +
 
     #Add Local Polynomials
     stat_function(data = dat, aes(x=X,y=Y),
